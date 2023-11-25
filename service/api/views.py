@@ -37,14 +37,14 @@ async def get_reco(
 
     k_recs = request.app.state.k_recs
 
+    if user_id > 10 ** 9:
+        raise UserNotFoundError(error_message=f"User {user_id} not found")
+
     # Write your code here
     if model_name == "top":
         reco = list(range(k_recs))
     else:
         raise ModelNotFoundError(error_message=f"Model {model_name} not found")
-
-    if user_id > 10 ** 9:
-        raise UserNotFoundError(error_message=f"User {user_id} not found")
 
     return RecoResponse(user_id=user_id, items=reco)
 
