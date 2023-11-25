@@ -45,7 +45,7 @@ def test_get_reco_for_unknown_model(
     client: TestClient,
 ) -> None:
     user_id = 123
-    model_name = "unknown_model"
+    model_name = "some_model"
     path = GET_RECO_PATH.format(model_name=model_name, user_id=user_id)
     with client:
         response = client.get(path)
