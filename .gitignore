@@ -66,4 +66,6 @@ venv.bak/
 # mypy
 .mypy_cache/
 
-
+# Others
+*.dill
+*.pkl

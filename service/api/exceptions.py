@@ -37,3 +37,14 @@ class ModelNotFoundError(AppException):
         error_loc: tp.Optional[tp.Sequence[str]] = None,
     ):
         super().__init__(status_code, error_key, error_message, error_loc)
+
+
+class ModelLoadError(AppException):
+    def __init__(
+        self,
+        error_message: str,
+        status_code: int = HTTPStatus.INTERNAL_SERVER_ERROR,
+        error_key: str = "model_load_error",
+        error_loc: tp.Optional[tp.Sequence[str]] = None,
+    ) -> None:
+        super().__init__(status_code, error_key, error_message, error_loc)
