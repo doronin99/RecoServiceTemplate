@@ -2,7 +2,6 @@ from typing import List
 
 from fastapi import APIRouter, FastAPI, Request
 from pydantic import BaseModel
-from rectools.tools import UserToItemAnnRecommender
 
 from models.loader import load_model
 from service.api.exceptions import ModelNotFoundError, UserNotFoundError
