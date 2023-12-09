@@ -54,6 +54,12 @@ async def get_reco(
     elif model_name == "userknn":
         userknn_model = load_model("models/userknn.dill")
         reco = userknn_model.predict_single(user_id, N_recs=k_recs)
+    elif model_name == "LightFM_warp_10_with_ann":
+        lightfm_model = load_model("models/LightFM_warp_10_with_ann.dill")
+        if user_id in lightfm_model.user_id_map.external_ids:
+            reco = lightfm_model.get_item_list_for_user(user_id=user_id, top_n=k_recs).tolist()
+        else:
+            reco = list(range(k_recs))
     else:
         raise ModelNotFoundError(error_message=f"Model {model_name} not found")
 
