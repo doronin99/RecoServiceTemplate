@@ -1,5 +1,6 @@
 from typing import List
 
+import numpy as np
 from fastapi import APIRouter, FastAPI, Request
 from pydantic import BaseModel
 
@@ -57,9 +58,12 @@ async def get_reco(
     elif model_name == "LightFM_warp_10_with_ann":
         lightfm_model = load_model("models/LightFM_warp_10_with_ann.dill")
         if user_id in lightfm_model.user_id_map.external_ids:
-            reco = lightfm_model.get_item_list_for_user(user_id=user_id, top_n=k_recs).tolist()
+            reco = lightfm_model.get_item_list_for_user(user_id=user_id, top_n=k_recs)
         else:
             reco = list(range(k_recs))
+    elif model_name == "ae_recommender_model":
+        ae_recommender_model = load_model("models/ae_recommender_model.dill")
+        reco = ae_recommender_model.recommend_items(user_id=user_id, topn=k_recs)
     else:
         raise ModelNotFoundError(error_message=f"Model {model_name} not found")
 
