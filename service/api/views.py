@@ -1,6 +1,5 @@
 from typing import List
 
-import numpy as np
 from fastapi import APIRouter, FastAPI, Request
 from pydantic import BaseModel
 
