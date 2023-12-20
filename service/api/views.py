@@ -3,7 +3,7 @@ from typing import List
 from fastapi import APIRouter, FastAPI, Request
 from pydantic import BaseModel
 
-from models.loader import load_model
+from models.loader import load_model, load_recos
 from service.api.exceptions import ModelNotFoundError, UserNotFoundError
 from service.log import app_logger
 
@@ -63,6 +63,13 @@ async def get_reco(
     elif model_name == "ae_recommender_model":
         ae_recommender_model = load_model("models/ae_recommender_model.dill")
         reco = ae_recommender_model.recommend_items(user_id=user_id, topn=k_recs)
+    elif model_name == "listwise_hybrid":
+        listwise_recos = load_recos("models/listwise_recos.json")
+        user_id = str(user_id)
+        if user_id in listwise_recos:
+            reco = listwise_recos[user_id][:k_recs]
+        else:
+            reco = list(range(k_recs))
     else:
         raise ModelNotFoundError(error_message=f"Model {model_name} not found")
 
